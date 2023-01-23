@@ -25,10 +25,11 @@
     <script src="https://js.arcgis.com/4.25/"></script>
 
     <script>
-      require(["esri/Map", "esri/layers/GeoJSONLayer", "esri/views/MapView"], (
+      require(["esri/Map", "esri/layers/GeoJSONLayer", "esri/views/MapView","esri/widgets/Legend"], (
         Map,
         GeoJSONLayer,
-        MapView
+        MapView,
+		Legend
       ) => {
         // If GeoJSON files are not on the same domain as your website, a CORS enabled server
         // or a proxy is required.
