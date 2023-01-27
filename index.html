@@ -1,72 +1,138 @@
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="initial-scale=1,maximum-scale=1,user-scalable=no"
-    />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <title>GeoJSONLayer | Sample | ArcGIS Maps SDK for JavaScript 4.25</title>
 
     <style>
-      html,
-      body,
-      #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      }
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: calc(100vh - 50px);
+            width: 100%;
+        }
     </style>
-
-    <link
-      rel="stylesheet"
-      href="https://js.arcgis.com/4.25/esri/themes/light/main.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css" />
     <script src="https://js.arcgis.com/4.25/"></script>
 
     <script>
-      require(["esri/Map", "esri/layers/GeoJSONLayer", "esri/views/MapView","esri/widgets/Legend"], (
-        Map,
-        GeoJSONLayer,
-        MapView,
-		Legend
-      ) => {
-        // If GeoJSON files are not on the same domain as your website, a CORS enabled server
-        // or a proxy is required.
-        const url =
-          "Artesia_Buffer.geojson";
+        require(["esri/Map", "esri/layers/GeoJSONLayer", "esri/views/MapView", "esri/widgets/Legend"], (
+            Map,
+            GeoJSONLayer,
+            MapView,
+            Legend
+        ) => {
+            // If GeoJSON files are not on the same domain as your website, a CORS enabled server
+            // or a proxy is required.
+            const url =
+                "Artesia_Buffer.geojson";
 
-        // Paste the url into a browser's address bar to download and view the attributes
-        // in the GeoJSON file. These attributes include:
-        // * mag - magnitude
-        // * type - earthquake or other event such as nuclear test
-        // * place - location of the event
-        // * time - the time of the event
-        // Use the Arcade Date() function to format time field into a human-readable format
+            // Set up popup template
+            const template = {
+                // autocasts as new PopupTemplate()
+                title: "{CD_Setback} Setback in {SiteCity}",
+                content: [
+                    {
+                        // It is also possible to set the fieldInfos outside of the content
+                        // directly in the popupTemplate. If no fieldInfos is specifically set
+                        // in the content, it defaults to whatever may be set within the popupTemplate.
+                        type: "fields",
+                        fieldInfos: [
+                            {
+                                fieldName: "CD_SetbackType",
+                                label: "Setback Type"
+                            },
+                            {
+                                fieldName: "APN",
+                                label: "APN"
+                            },
+                            {
+                                fieldName: "SiteAddr",
+                                label: "Address"
+                            },
+                            {
+                                fieldName: "SiteZip",
+                                label: "Zip Code"
+                            }
+                        ]
+                    }
+                ]
+            };
 
+            const geojsonLayer = new GeoJSONLayer({
+                url: url,
+                popupTemplate: template
+            });
 
+            const map = new Map({
+                basemap: "gray-vector",
+                layers: [geojsonLayer]
+            });
 
+            const view = new MapView({
+                container: "viewDiv",
+                center: [-118.0855941955399, 33.868926809303446],
+                zoom: 13,
+                map: map,
+                  popup: {
+                    dockEnabled: true,
+                    dockOptions: {
+                      // Disables the dock button from the popup
+                      buttonEnabled: false,
+                      // Ignore the default sizes that trigger responsive docking
+                      breakpoint: false
+                    }
+                  },
+            });
 
-        const geojsonLayer = new GeoJSONLayer({
-          url: url
+            //legend
+        //     view.when(() => {
+        //   // get the first layer in the collection of operational layers in the WebMap
+        //   // when the resources in the MapView have loaded.
+        //   const featureLayer = webmap.layers.getItemAt(0);
+
+        //   const legend = new Legend({
+        //     view: view,
+        //     layerInfos: [
+        //       {
+        //         layer: geojsonLayer,
+        //         title: "Artesia Buffer"
+        //       }
+        //     ]
+        //   });
+
+        //   // Add widget to the bottom left corner of the view
+        //   view.ui.add(legend, "bottom-left");
+        // });
         });
 
-        const map = new Map({
-          basemap: "gray-vector",
-          layers: [geojsonLayer]
-        });
 
-        const view = new MapView({
-          container: "viewDiv",
-          center: [-168, 46],
-          zoom: 2,
-          map: map
-        });
-      });
     </script>
-  </head>
+</head>
 
-  <body>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+        <a class="navbar-brand" href="#">Artesia, Los Angeles, CA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#"></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div id="viewDiv"></div>
-  </body>
+</body>
+
 </html>
