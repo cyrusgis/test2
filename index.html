@@ -14,7 +14,40 @@
             height: calc(100vh - 50px);
             width: 100%;
         }
+
+        /* Splash screen styles */
+        #splash-screen {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            height: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translate(-50%, -50%);
+        }
+
+        #splash-screen p {
+            text-align: center;
+            font-size: 1.0rem;
+            line-height: 1.5;
+            max-width: 800px;
+        }
+
+        #splash-screen button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #337ab7;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css" />
     <script src="https://js.arcgis.com/4.25/"></script>
@@ -78,36 +111,36 @@
                 center: [-118.0855941955399, 33.868926809303446],
                 zoom: 13,
                 map: map,
-                  popup: {
+                popup: {
                     dockEnabled: true,
                     dockOptions: {
-                      // Disables the dock button from the popup
-                      buttonEnabled: false,
-                      // Ignore the default sizes that trigger responsive docking
-                      breakpoint: false
+                        // Disables the dock button from the popup
+                        buttonEnabled: false,
+                        // Ignore the default sizes that trigger responsive docking
+                        breakpoint: false
                     }
-                  },
+                },
             });
 
             //legend
-        //     view.when(() => {
-        //   // get the first layer in the collection of operational layers in the WebMap
-        //   // when the resources in the MapView have loaded.
-        //   const featureLayer = webmap.layers.getItemAt(0);
+            //     view.when(() => {
+            //   // get the first layer in the collection of operational layers in the WebMap
+            //   // when the resources in the MapView have loaded.
+            //   const featureLayer = webmap.layers.getItemAt(0);
 
-        //   const legend = new Legend({
-        //     view: view,
-        //     layerInfos: [
-        //       {
-        //         layer: geojsonLayer,
-        //         title: "Artesia Buffer"
-        //       }
-        //     ]
-        //   });
+            //   const legend = new Legend({
+            //     view: view,
+            //     layerInfos: [
+            //       {
+            //         layer: geojsonLayer,
+            //         title: "Artesia Buffer"
+            //       }
+            //     ]
+            //   });
 
-        //   // Add widget to the bottom left corner of the view
-        //   view.ui.add(legend, "bottom-left");
-        // });
+            //   // Add widget to the bottom left corner of the view
+            //   view.ui.add(legend, "bottom-left");
+            // });
         });
 
 
@@ -133,6 +166,26 @@
         </div>
     </nav>
     <div id="viewDiv"></div>
+    <div id="splash-screen">
+        <p> <img src="https://www.cann.dev/wp-content/uploads/2022/04/logo-horizontal-e1651691997452-300x131.png"
+                alt="logo"><br>
+            This map is the confidential and proprietary information of CDev, LLC ("CDev"). By proceeding, you
+            acknowledge that this map has been developed through the significant effort and expense of CDev. In deciding
+            to view this information, you are agreeing, intending to be legally bound, not to share any of the
+            information without the express written permission of CDev unless compelled by law. You agree that, if you
+            share any such information in violation of this agreement, you will be liable to CDev for any damages CDev
+            sustains therefrom, including lost profits, and you agree that CDev may obtain an injunction against any
+            disclosure without having to prove irreparable harm or post a bond. <br> <button id="splash-screen-button">I
+                agree</button></p>
+
+
+    </div>
+    <script>
+        $('#splash-screen-button').on('click', function () {
+            $('#splash-screen').hide();
+        });
+    </script>
+
 </body>
 
 </html>
