@@ -109,7 +109,7 @@
     <script src="https://js.arcgis.com/4.25/"></script>
 
     <script>
-        require(["esri/Map", "esri/layers/GeoJSONLayer", "esri/views/MapView", "esri/widgets/Legend", "esri/widgets/BasemapGallery", "esri/widgets/Expand", "esri/widgets/Home"], (
+        require(["esri/Map", "esri/layers/GeoJSONLayer", "esri/views/MapView", "esri/widgets/Legend", "esri/widgets/BasemapGallery", "esri/widgets/Expand", "esri/widgets/Home","esri/widgets/Legend"], (
             Map,
             GeoJSONLayer,
             MapView,
@@ -181,8 +181,10 @@
                     }
                 },
             });
-
-
+            var legend = new Legend({
+        view: view
+      });
+      view.ui.add(legend, "bottom-right");
             //Home
             const homeBtn = new Home({
                 view: view
@@ -223,7 +225,6 @@
             // Add the expand instance to the ui
 
             view.ui.add(bgExpand, "bottom-left");
-
 
             //legend
             //     view.when(() => {
